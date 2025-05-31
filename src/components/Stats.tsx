@@ -1,5 +1,5 @@
 import React from 'react';
-import { calculateAge } from '../utils/dateCalculations';
+import { calculateAge, calculateTimeStats } from '../utils/dateCalculations';
 
 interface StatsProps {
   weeksLived: number;
@@ -15,6 +15,7 @@ export const Stats: React.FC<StatsProps> = ({
   const TOTAL_WEEKS = 90 * 52;
   const weeksRemaining = TOTAL_WEEKS - weeksLived;
   const age = birthDate ? calculateAge(birthDate) : 0;
+  const timeStats = calculateTimeStats(weeksLived);
 
   return (
     <div className="space-y-6">
@@ -37,6 +38,41 @@ export const Stats: React.FC<StatsProps> = ({
           <p className="text-sm text-gray-400">Life Progress</p>
           <p className="text-3xl font-bold text-teal-400">{percentageLived.toFixed(1)}%</p>
           <p className="text-sm text-gray-400">complete</p>
+        </div>
+      </div>
+
+      <div className="bg-gray-900/50 p-6 rounded-lg">
+        <h3 className="text-xl font-semibold text-gray-100 mb-4">Time Distribution (so far)</h3>
+        <div className="space-y-4">
+          <div>
+            <div className="flex justify-between text-sm mb-1">
+              <span className="text-gray-300">Sleep (8 hours daily)</span>
+              <span className="text-teal-400">{timeStats.sleepYears.toFixed(1)} years</span>
+            </div>
+            <div className="w-full bg-gray-700 rounded-full h-2">
+              <div className="bg-teal-400 h-2 rounded-full" style={{ width: `${timeStats.sleepPercentage}%` }}></div>
+            </div>
+          </div>
+          
+          <div>
+            <div className="flex justify-between text-sm mb-1">
+              <span className="text-gray-300">Essential Activities (4.5 hours daily)</span>
+              <span className="text-teal-400">{timeStats.essentialYears.toFixed(1)} years</span>
+            </div>
+            <div className="w-full bg-gray-700 rounded-full h-2">
+              <div className="bg-teal-400 h-2 rounded-full" style={{ width: `${timeStats.essentialPercentage}%` }}></div>
+            </div>
+          </div>
+          
+          <div>
+            <div className="flex justify-between text-sm mb-1">
+              <span className="text-gray-300">Discretionary Time</span>
+              <span className="text-teal-400">{timeStats.discretionaryYears.toFixed(1)} years</span>
+            </div>
+            <div className="w-full bg-gray-700 rounded-full h-2">
+              <div className="bg-teal-400 h-2 rounded-full" style={{ width: `${timeStats.discretionaryPercentage}%` }}></div>
+            </div>
+          </div>
         </div>
       </div>
       

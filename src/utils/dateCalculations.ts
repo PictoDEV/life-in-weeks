@@ -14,7 +14,6 @@ export const calculateAge = (birthDate: Date): number => {
     age--;
   }
   
-  // Add decimal point for partial years
   const yearInMs = 31536000000; // 365 days in milliseconds
   const birthDateThisYear = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
   let timePassedThisYear;
@@ -28,6 +27,34 @@ export const calculateAge = (birthDate: Date): number => {
   
   const decimalPortion = timePassedThisYear / yearInMs;
   return age + decimalPortion;
+};
+
+export const calculateTimeStats = (weeksLived: number) => {
+  const totalHours = weeksLived * 7 * 24;
+  
+  // Sleep: 8 hours per day
+  const sleepHours = weeksLived * 7 * 8;
+  const sleepYears = sleepHours / (365 * 24);
+  const sleepPercentage = (sleepHours / totalHours) * 100;
+  
+  // Essential activities: 4.5 hours per day
+  const essentialHours = weeksLived * 7 * 4.5;
+  const essentialYears = essentialHours / (365 * 24);
+  const essentialPercentage = (essentialHours / totalHours) * 100;
+  
+  // Remaining discretionary time
+  const discretionaryHours = totalHours - (sleepHours + essentialHours);
+  const discretionaryYears = discretionaryHours / (365 * 24);
+  const discretionaryPercentage = (discretionaryHours / totalHours) * 100;
+  
+  return {
+    sleepYears,
+    sleepPercentage,
+    essentialYears,
+    essentialPercentage,
+    discretionaryYears,
+    discretionaryPercentage
+  };
 };
 
 export const formatDate = (date: Date): string => {
